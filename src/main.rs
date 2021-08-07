@@ -7,7 +7,7 @@ use std::io::{self};
 
 /// Clipboard manager
 #[derive(Clap)]
-#[clap(version = "0.1", author = "Eric Crowder <eric@ebcrowder.dev>")]
+#[clap(version = "0.1.0", author = "Eric Crowder <eric@ebcrowder.dev>")]
 struct Opts {
     #[clap(subcommand)]
     subcmd: SubCommand,
