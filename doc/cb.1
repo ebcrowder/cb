@@ -1,0 +1,45 @@
+.TH CB 1
+.SH NAME
+cb \- clipboard manager
+.SH SYNOPSIS
+\fBcb\fR [OPTIONS]
+.SH OPTIONS
+.TP
+\fIget\fR
+get a value from the system clipboard
+
+.TP
+\fIset\fR
+set a value to the system clipboard
+
+.TP
+\fIclear\fR
+clear the system clipboard
+.SH USAGE NOTE
+This program is designed to read input being piped via stdin.
+
+
+.SH EXIT STATUS
+.TP
+\fB0\fR
+Successful program execution.
+
+.TP
+\fB1\fR
+Unsuccessful program execution.
+
+.TP
+\fB101\fR
+The program panicked.
+.SH EXAMPLES
+.TP
+set a value to the system clipboard
+\fB$ echo foo | cb set\fR
+.br
+value set to clipboard!
+
+.SH AUTHOR
+.P
+.RS 2
+.nf
+Eric Crowder <eric@ebcrowder.dev>
