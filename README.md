@@ -1,3 +1,5 @@
+[![main](https://github.com/ebcrowder/cb/actions/workflows/main.yml/badge.svg)](https://github.com/ebcrowder/cb/actions/workflows/main.yml)
+
 # cb
 Clipboard management utility
 
