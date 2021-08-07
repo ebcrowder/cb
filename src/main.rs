@@ -5,7 +5,7 @@ use clap::{Clap};
 use clipboard::{ClipboardProvider, ClipboardContext};
 use std::io::{self};
 
-/// Clipboard manager
+/// clipboard manager
 #[derive(Clap)]
 #[clap(version = "0.1.0", author = "Eric Crowder <eric@ebcrowder.dev>")]
 struct Opts {
@@ -38,8 +38,7 @@ fn set_clipboard_contents(mut ctx: ClipboardContext, input: String) {
 }
 
 fn get_clipboard_contents(mut ctx: ClipboardContext) -> String {
-    let contents = ctx.get_contents().unwrap_or_default();
-    contents
+    ctx.get_contents().unwrap_or_default()
 }
 
 fn clear_clipboard_contents(mut ctx: ClipboardContext) {
