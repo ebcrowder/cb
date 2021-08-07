@@ -15,6 +15,16 @@ jobs:
         uses: actions-rs/toolchain@v1
         with:
           toolchain: stable
+      - name: run tests
+        uses: actions-rs/cargo@v1
+        with:
+          command: test
+      - name: run clippy
+        run: rustup component add clippy
+        uses: actions-rs/cargo@v1
+        with:
+          command: clippy
+          args: -- -D warnings
       - name: compile binary
         uses: actions-rs/cargo@v1
         with:
