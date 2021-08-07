@@ -1,51 +1,73 @@
+extern crate clap;
 extern crate clipboard;
 
+use clap::{Clap};
 use clipboard::{ClipboardProvider, ClipboardContext};
-use std::io::{self, Read, Write};
+use std::io::{self};
 
-/// stdin manages the buffer received from stdin
-/// and sent to stdout
-struct StdIO {
-    buffer: String,
+/// Clipboard manager
+#[derive(Clap)]
+#[clap(version = "0.1", author = "Eric Crowder <eric@ebcrowder.dev>")]
+struct Opts {
+    #[clap(subcommand)]
+    subcmd: SubCommand,
 }
 
-impl StdIO {
-    fn new() -> StdIO {
-        StdIO {
-            buffer: String::new()
-        }
-    }
-    fn read_from_stdin(&mut self) {
-        let mut input = String::new();
-        match io::stdin().read_line(&mut input) {
-            Ok(n) => {
-                self.buffer = input;
-            }
-            Err(error) => println!("error: {}", error),
-        }
-    }
-    fn write_to_stdout(self) -> Result<(), std::io::Error> {
-        io::stdout().write_all(self.buffer.as_ref()).unwrap();
-        Ok(())
+#[derive(Clap)]
+enum SubCommand {
+    /// get a value from the system clipboard
+    Get,
+    /// set a value to the system clipboard
+    Set,
+    /// clear the system clipboard
+    Clear,
+}
+
+fn read_from_stdin() -> Result<String, std::io::Error> {
+    let mut buffer = String::new();
+    match io::stdin().read_line(&mut buffer) {
+        Ok(_) => Ok(buffer),
+        Err(error) => Err(error),
     }
 }
 
-fn set_clipboard_contents(input: String) {
-    let mut ctx: ClipboardContext = ClipboardProvider::new().unwrap();
+fn set_clipboard_contents(mut ctx: ClipboardContext, input: String) {
     ctx.set_contents(input).unwrap();
+    // read contents after setting so that they persist
+    ctx.get_contents().unwrap_or_default();
 }
 
-fn get_clipboard_contents() -> String {
-    let mut ctx: ClipboardContext = ClipboardProvider::new().unwrap();
+fn get_clipboard_contents(mut ctx: ClipboardContext) -> String {
     let contents = ctx.get_contents().unwrap_or_default();
     contents
 }
 
-fn main() {
-    let mut b = StdIO::new();
-    b.read_from_stdin();
+fn clear_clipboard_contents(mut ctx: ClipboardContext) {
+    ctx.set_contents("".to_string()).unwrap();
+    // read contents after setting so that they persist
+    ctx.get_contents().unwrap_or_default();
+}
 
-    set_clipboard_contents(b.buffer);
-    let contents = get_clipboard_contents();
-    println!("{:?}", contents);
+fn main() {
+    // parse arguments
+    let opts: Opts = Opts::parse();
+
+    // instantiate ClipboardProvider
+    let ctx: ClipboardContext = ClipboardProvider::new().unwrap();
+
+    match opts.subcmd {
+        SubCommand::Get => {
+            let contents = get_clipboard_contents(ctx);
+            println!("clipboard contents: {:?}", contents);
+        }
+        SubCommand::Set => {
+            let b = read_from_stdin().unwrap();
+            set_clipboard_contents(ctx, b);
+            println!("value set to clipboard!");
+        }
+        SubCommand::Clear => {
+            clear_clipboard_contents(ctx);
+            println!("clipboard cleared!");
+        }
+    }
 }
