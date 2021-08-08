@@ -2,7 +2,7 @@
 
 # cb
 
-clipboard manager
+clipboard manager for linux and macOS.
 
 `cb` is a utility that allows you to get and set values on the system clipboard.
 
@@ -36,7 +36,7 @@ cargo install cb
 
 ### compilation
 
-For debian-based distributions, install the system dependencies:
+For debian-based linux distributions, install the system dependencies:
 
 ```bash 
 sudo apt install xorg-dev libxcb-present-dev

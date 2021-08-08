@@ -1,8 +1,8 @@
 extern crate clap;
 extern crate clipboard;
 
-use clap::{Clap};
-use clipboard::{ClipboardProvider, ClipboardContext};
+use clap::Clap;
+use clipboard::{ClipboardContext, ClipboardProvider};
 use std::io::{self};
 
 /// clipboard manager
