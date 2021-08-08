@@ -1,4 +1,5 @@
 [![main](https://github.com/ebcrowder/cb/actions/workflows/main.yml/badge.svg)](https://github.com/ebcrowder/cb/actions/workflows/main.yml)
+[![Latest version](https://img.shields.io/crates/v/cb.svg)](https://crates.io/crates/cb)
 
 # cb
 
@@ -6,7 +7,7 @@ Clipboard manager for Linux and macOS.
 
 `cb` is a utility that allows you to get and set values on the system clipboard.
 
-### examples
+### Examples
 
 Using `cb` is quite simple. Getting the current clipboard value is done via the following:
 
@@ -26,15 +27,15 @@ Finally, to clear a value from the clipboard, do the following:
 cb clear
 ```
 
-### installation
+### Installation
 
-If Rust is installed:
+Install [Rust](https://rustup.rs/) and then do:
 
 ```bash
 cargo install cb
 ```
 
-### compilation
+### Compilation
 
 For Debian-based Linux distributions, install the system dependencies:
 
